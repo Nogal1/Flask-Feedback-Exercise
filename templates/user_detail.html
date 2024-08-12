@@ -1,0 +1,36 @@
+<!-- templates/user_detail.html -->
+{% extends "base.html" %}
+
+{% block title %}
+{{ user.username }}'s Profile
+{% endblock %}
+
+{% block content %}
+<h2>{{ user.username }}'s Profile</h2>
+<ul>
+    <li><strong>Username:</strong> {{ user.username }}</li>
+    <li><strong>Email:</strong> {{ user.email }}</li>
+    <li><strong>First Name:</strong> {{ user.first_name }}</li>
+    <li><strong>Last Name:</strong> {{ user.last_name }}</li>
+</ul>
+
+<h3>Feedback</h3>
+<ul>
+    {% for feedback in feedback_list %}
+    <li>
+        <strong>{{ feedback.title }}</strong>
+        <p>{{ feedback.content }}</p>
+        <a href="/feedback/{{ feedback.id }}/update" class="btn btn-sm btn-warning">Edit</a>
+        <form method="POST" action="/feedback/{{ feedback.id }}/delete" style="display:inline;">
+            <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="/users/{{ user.username }}/feedback/add" class="btn btn-primary">Add Feedback</a>
+<form method="POST" action="/users/{{ user.username }}/delete" style="display:inline;">
+    <button class="btn btn-danger">Delete Account</button>
+</form>
+
+{% endblock %}
